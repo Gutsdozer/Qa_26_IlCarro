@@ -19,7 +19,44 @@ public class LoginTests extends TestBase {
     app.getHelperUser().openLoginForm();
     app.getHelperUser().fillLoginForm("warderbass@gmail.com", "Freddy666!");
     app.getHelperUser().submitLogin();
-    app.getHelperUser().click(By.xpath("//*[@class = 'positive-button ng-star-inserted']"));
+    app.getHelperUser().clickOkAfterLogin();
         Assert.assertTrue(app.getHelperUser().isLogged());
+    }
+
+    @Test
+    public void loginWrongEmail(){
+        app.getHelperUser().openLoginForm();
+        app.getHelperUser().fillLoginForm("warderbas@gmail.com", "Freddy666!");
+        app.getHelperUser().submitLogin();
+        app.getHelperUser().loginOrPasswordIncorrectPresent();
+
+    }
+
+    @Test
+    public void loginWrongEmailWithoutAt(){
+        app.getHelperUser().openLoginForm();
+        app.getHelperUser().fillLoginForm("warderbassgmail.com", "Freddy666!");
+        app.getHelperUser().notAnEmailMessagePresent();
+
+    }
+
+    @Test
+    public void loginWrongPassword(){
+        app.getHelperUser().openLoginForm();
+        app.getHelperUser().fillLoginForm("warderbass@gmail.com", "Freddy666");
+        app.getHelperUser().submitLogin();
+        app.getHelperUser().stop(1);
+        app.getHelperUser().loginOrPasswordIncorrectPresent();
+
+    }
+
+    @Test
+    public void loginUnregisteredUser(){
+        app.getHelperUser().openLoginForm();
+        app.getHelperUser().fillLoginForm("luka@gmail.com", "GoodDay1234!");
+        app.getHelperUser().submitLogin();
+        app.getHelperUser().stop(1);
+        app.getHelperUser().loginOrPasswordIncorrectPresent();
+
     }
 }
