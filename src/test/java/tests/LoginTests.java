@@ -30,6 +30,7 @@ public class LoginTests extends TestBase {
         app.getHelperUser().submitLogin();
         app.getHelperUser().loginOrPasswordIncorrectPresent();
 
+
     }
 
     @Test
@@ -37,6 +38,7 @@ public class LoginTests extends TestBase {
         app.getHelperUser().openLoginForm();
         app.getHelperUser().fillLoginForm("warderbassgmail.com", "Freddy666!");
         app.getHelperUser().notAnEmailMessagePresent();
+        Assert.assertTrue(app.getHelperUser().isYallaButtonNotActive());
 
     }
 
