@@ -31,6 +31,11 @@ public class HelperUser extends HelperBase {
         type(By.xpath("//*[@ng-reflect-name = 'password']"), password);
     }
 
+    public void fillLoginForm(User user) {
+        type(By.id("email"), user.getEmail());
+        type(By.id("password"), user.getPassword());
+    }
+
     public void submitLogin() {
         click(By.xpath("//*[@type = 'submit']"));
     }
@@ -106,8 +111,6 @@ public class HelperUser extends HelperBase {
     public void login(User user) {
         openLoginForm();
         fillLoginForm(user);
-
-
     }
 }
 
