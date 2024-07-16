@@ -60,5 +60,26 @@ public class HelperBase {
         }
     }
 
+    public void pause(int time){
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void submit() {
+        click(By.xpath("//*[@type='submit']"));
+    }
+
+    public String getMessage() {
+        pause(1000);
+        return wd.findElement(By.cssSelector(".dialog-container>h2")).getText();
+//        WebElement element = wd.findElement(By.cssSelector(".dialog-container>h2"));
+//        String text = element.getText();
+//        return text;
+
+    }
+
 
 }
