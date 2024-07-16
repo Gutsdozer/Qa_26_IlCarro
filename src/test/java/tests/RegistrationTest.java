@@ -32,10 +32,99 @@ public class RegistrationTest extends TestBase{
 
         app.getHelperUser().openRegistrationForm();
         app.getHelperUser().fillRegistrationForm(user);
-        app.getHelperUser().checkPolicy();
+        app.getHelperUser().checkPolicyXY();
         app.getHelperUser().submit();
     }
 
+//**********Negative
+    public void registrationEmptyName(){
+        User user = new User()
+                .setName("")
+                .setLastName("Snow")
+                .withEmail("snow@gmail.com")
+                .withPassword("Snow1234");
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().checkPolicyXY();
+        app.getHelperUser().submit();
+        Assert.assertEquals(app.getHelperUser().getErrorText(), "Name is required");
+    }
 
+    public void registrationEmptyLastName(){
+        User user = new User()
+                .setName("Lisa")
+                .setLastName("")
+                .withEmail("snow@gmail.com")
+                .withPassword("Snow1234");
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().checkPolicyXY();
+        app.getHelperUser().submit();
+        Assert.assertEquals(app.getHelperUser().getErrorText(), "Last ame is required");
+    }
+
+    public void registrationWrongEmail(){
+        User user = new User()
+                .setName("Lisa")
+                .setLastName("Snow")
+                .withEmail("snowgmail.com")
+                .withPassword("Snow1234");
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().checkPolicyXY();
+        app.getHelperUser().submit();
+        Assert.assertEquals(app.getHelperUser().getErrorText(), "Wrong email format");
+    }
+
+    public void registrationWrongPassword(){
+        User user = new User()
+                .setName("Lisa")
+                .setLastName("Snow")
+                .withEmail("snow@gmail.com")
+                .withPassword("snow1234");
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().checkPolicyXY();
+        app.getHelperUser().submit();
+        Assert.assertEquals(app.getHelperUser().getErrorText(), "Password must contain minimum 8 symbols\n" +
+                "Password must contain 1 uppercase letter, 1 lowercase letter, 1 number and one special symbol of [@$#^&*!]");
+    }
+
+    public void registrationEmptyEmail(){
+        User user = new User()
+                .setName("Lisa")
+                .setLastName("Snow")
+                .withEmail("")
+                .withPassword("Snow1234");
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().checkPolicyXY();
+        app.getHelperUser().submit();
+        Assert.assertEquals(app.getHelperUser().getErrorText(), "Email is required");
+    }
+
+    public void registrationEmptyPassword(){
+        User user = new User()
+                .setName("Lisa")
+                .setLastName("Snow")
+                .withEmail("snow@gmail.com")
+                .withPassword("");
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().checkPolicyXY();
+        app.getHelperUser().submit();
+        Assert.assertEquals(app.getHelperUser().getErrorText(), "Password is required");
+    }
+
+    public void registrationWithoutCheckbox(){
+        User user = new User()
+                .setName("Lisa")
+                .setLastName("Snow")
+                .withEmail("snow@gmail.com")
+                .withPassword("Snow1234");
+        app.getHelperUser().openRegistrationForm();
+        app.getHelperUser().fillRegistrationForm(user);
+        app.getHelperUser().submit();
+    }
 
 }

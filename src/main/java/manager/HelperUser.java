@@ -1,10 +1,8 @@
 package manager;
 
 import models.User;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
 public class HelperUser extends HelperBase {
@@ -65,6 +63,10 @@ public class HelperUser extends HelperBase {
         submitLogin();
     }
 
+    public String getErrorText() {
+        return wd.findElement(By.cssSelector("div.error")).getText();
+    }
+
 
     public void openRegistrationForm() {
         click(By.xpath("//*[text() = ' Sign up ']"));
@@ -86,6 +88,19 @@ public class HelperUser extends HelperBase {
 
         JavascriptExecutor js = (JavascriptExecutor) wd;
         js.executeScript("document.querySelector('#terms-of-use').click()");
+    }
+
+    public void checkPolicyXY(){
+        if(!wd.findElement(By.id("terms-of-use")).isSelected()){
+            WebElement label = wd.findElement(By.cssSelector("label[for = 'terms-of-use']"));
+        }
+        WebElement label = wd.findElement(By.cssSelector("label[for = 'terms-of-use'] "));
+        Rectangle rect = label.getRect();
+        int w = rect.getWidth();
+
+        int xOffset = -w/2;
+        Actions actions = new Actions(wd);
+        actions.moveToElement(label, xOffset, 0).click().release().perform();
     }
 }
 
