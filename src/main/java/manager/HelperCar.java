@@ -48,6 +48,7 @@ public class HelperCar extends HelperBase{
     }
 
 
-
-
+    public void attachPhoto(String link) {
+        wd.findElement(By.cssSelector("#photos")).sendKeys(link);
+    }
 }

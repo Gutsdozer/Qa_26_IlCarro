@@ -41,6 +41,7 @@ public class AddNewCarTests extends TestBase {
         app.getHelperCar().openCarForm();
         app.getHelperCar().fillCarForm(car);
         app.getHelperCar().submit();
+       app.getHelperCar().attachPhoto("C:\\Users\\User\\Documents\\GitHub\\Qa_26_IlCarro\\ZomboMeme 24122022003552.jpg");
         Assert.assertTrue(app.getHelperCar().getMessage().contains("added successful"));
         Assert.assertEquals(app.getHelperCar().getMessage(),car.getManufacture()+ " "+car.getModel()+" added successful");
 
