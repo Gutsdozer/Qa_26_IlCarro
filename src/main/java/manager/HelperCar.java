@@ -58,6 +58,7 @@ public class HelperCar extends HelperBase{
 
     public void searchCurrentMonth(String city, String dateFrom, String dateTo) {
         typeCity(city);
+        clearTextField(By.id("dates"));
         click(By.id("dates"));
 
         //"1/25/2024", "1/28/2024"   25  28
@@ -113,5 +114,55 @@ public class HelperCar extends HelperBase{
         for (int i = 0; i < difMonth; i++) {
             click(By.cssSelector("button[aria-label='Next month']"));
         }
+    }
+    public void searchAnyPeriod(String city, String dateFrom, String dateTo) {
+        clearTextField(By.id("city"));
+        typeCity(city);
+        clearTextField(By.id("dates"));
+        click(By.id("dates"));
+
+        LocalDate now = LocalDate.now();
+        LocalDate from = LocalDate.parse(dateFrom, DateTimeFormatter.ofPattern("M/d/yyyy"));
+        LocalDate to = LocalDate.parse(dateTo, DateTimeFormatter.ofPattern("M/d/yyyy"));
+
+        int diffYear;
+        int diffMonth;
+
+        ///***from
+        diffYear = from.getYear() - now.getYear();
+        if (diffYear == 0) {
+            diffMonth = from.getMonthValue() - now.getMonthValue();
+        } else {
+            diffMonth = 12 - now.getMonthValue() + from.getMonthValue();
+        }
+        clickNextMonthBtn(diffMonth);
+
+        String locator = String.format("//div[text()=' %s ']", from.getDayOfMonth());
+        click(By.xpath(locator));
+
+        ///***to
+
+        diffYear = to.getYear() - from.getYear();
+        if (diffYear == 0) {
+            diffMonth = to.getMonthValue() - from.getMonthValue();
+        } else {
+            diffMonth = 12 - from.getMonthValue() + to.getMonthValue();
+        }
+        clickNextMonthBtn(diffMonth);
+
+        locator = String.format("//div[text()=' %s ']", to.getDayOfMonth());
+        click(By.xpath(locator));
+
+    }
+
+    public void navigateByLogo() {
+        click(By.cssSelector("a.logo"));
+    }
+
+    public void searchNotValidPeriod(String city, String dateFrom, String dateTo) {
+    typeCity(city);
+    clearTextField(By.id("dates"));
+    type(By.id("dates"), dateFrom + " - " + dateTo);
+    click(By.cssSelector("div.cdk-overlay-backdrop"));
     }
 }

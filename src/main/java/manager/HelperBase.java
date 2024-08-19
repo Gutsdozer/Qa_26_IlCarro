@@ -1,10 +1,10 @@
 package manager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.google.common.io.Files;
+import org.openqa.selenium.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class HelperBase {
@@ -79,6 +79,31 @@ public class HelperBase {
 //        String text = element.getText();
 //        return text;
 
+    }
+
+    public void getScreen(String link){
+        TakesScreenshot takesScreenshot = (TakesScreenshot) wd;
+        File tmp = takesScreenshot.getScreenshotAs(OutputType.FILE);
+        try {
+            Files.copy(tmp, new File(link));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public boolean isYallaButtonNotActive(){
+        boolean res = isElementPresent(By.cssSelector("button[disabled]"));
+
+
+        WebElement element = wd.findElement(By.cssSelector("button[type = 'submit']"));
+        boolean result = element.isEnabled();
+
+        return res && !result;
+    }
+
+    public String getErrorText() {
+        return wd.findElement(By.cssSelector("div.error")).getText();
     }
 
 
